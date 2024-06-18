@@ -1,0 +1,20 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: Eventify
+  datasource:
+    url: jdbc:mysql://localhost/Eventify
+    username: bestin
+    password: bestin@123
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        ddl-auto: create
+    generate-ddl: true
+logging:
+  level:
+    org.springframework.data.jpa: DEBUG
+    org.hibernate: DEBUG
