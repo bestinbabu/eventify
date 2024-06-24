@@ -1,8 +1,8 @@
 package com.eventify.eventify.controller;
 
-import com.eventify.eventify.constants.UserConstants;
+import com.eventify.eventify.constants.AuthConstants;
 import com.eventify.eventify.dto.ResponseDto;
-import com.eventify.eventify.dto.user.RegistrationRequestDTO;
+import com.eventify.eventify.dto.user.RegistrationRequest;
 import com.eventify.eventify.service.IUserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,12 +21,12 @@ public class UserController {
     IUserService iUserService;
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDto> registerUser(@Valid @RequestBody RegistrationRequestDTO registrationRequestDTO) {
+    public ResponseEntity<ResponseDto> registerUser(@Valid @RequestBody RegistrationRequest registrationRequestDTO) {
 
         iUserService.registerUser(registrationRequestDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ResponseDto(UserConstants.STATUS_201, UserConstants.MESSAGE_201));
+                .body(new ResponseDto(AuthConstants.STATUS_201, AuthConstants.MESSAGE_201));
     }
 
     @GetMapping("/")

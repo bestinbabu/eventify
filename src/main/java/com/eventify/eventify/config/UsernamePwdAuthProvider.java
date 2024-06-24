@@ -4,8 +4,7 @@ import com.eventify.eventify.entity.user.User;
 import com.eventify.eventify.entity.user.UserRole;
 import com.eventify.eventify.exception.BadCredentialsException;
 import com.eventify.eventify.repository.UserRepository;
-import com.eventify.eventify.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,17 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Component
-
 public class UsernamePwdAuthProvider implements AuthenticationProvider {
-    @Autowired
-    private IUserService iUserService;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private UserRepository userRepository;
-
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

@@ -1,4 +1,4 @@
-package com.eventify.eventify.dto.user;
+package com.eventify.eventify.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserLoginDTO {
+public class AuthenticationRequest {
 
     @Email(message = "Invalid email format")  // Validate email format
     @NotEmpty(message = "Email address cannot be empty")
@@ -16,6 +16,5 @@ public class UserLoginDTO {
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
-    private boolean rememberMe; // Optional field
 }
 

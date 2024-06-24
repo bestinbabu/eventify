@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
 
 import static com.eventify.eventify.constants.SecurityConstants.JWT_HEADER;
 import static com.eventify.eventify.constants.SecurityConstants.JWT_PREFIX;
@@ -46,8 +45,8 @@ public class JwtFilter extends OncePerRequestFilter {
             User user = userRepository.findByEmail(userEmail).orElse(null);
             if (jwtService.isTokenValid(jwt, user.getEmail())) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        user.getEmail(), null,
-                )
+                        user.getEmail(), null
+                );
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.eventify.eventify.service.impl;
 
-import com.eventify.eventify.dto.user.RegistrationRequestDTO;
+import com.eventify.eventify.dto.user.RegistrationRequest;
 import com.eventify.eventify.entity.user.User;
 import com.eventify.eventify.entity.user.UserRole;
 import com.eventify.eventify.exception.UserAlreadyExistsException;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements IUserService {
     private UserRoleRepository userRoleRepository;
 
     @Override
-    public void registerUser(RegistrationRequestDTO registrationRequestDTO) {
+    public void registerUser(RegistrationRequest registrationRequestDTO) {
 
         if (userRepository.findByEmail(registrationRequestDTO.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException("User already exists");

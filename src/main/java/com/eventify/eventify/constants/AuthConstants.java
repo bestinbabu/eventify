@@ -1,8 +1,8 @@
 package com.eventify.eventify.constants;
 
-public final class UserConstants {
+public final class AuthConstants {
 
-    private UserConstants() {}
+    private AuthConstants() {}
 
     public static final String  STATUS_201 = "201";
     public static final String  MESSAGE_201 = "Account created successfully";

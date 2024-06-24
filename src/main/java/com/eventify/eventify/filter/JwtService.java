@@ -42,7 +42,6 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public List
 
     public String generateToken(String email) {
         return generateToken(new HashMap<>(), email);
