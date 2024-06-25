@@ -8,35 +8,39 @@ import com.eventify.eventify.mapper.UserMapper;
 import com.eventify.eventify.repository.UserRepository;
 import com.eventify.eventify.repository.UserRoleRepository;
 import com.eventify.eventify.service.IUserService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private UserRoleRepository userRoleRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public void registerUser(RegistrationRequest registrationRequestDTO) {
-
-        if (userRepository.findByEmail(registrationRequestDTO.getEmail()).isPresent()) {
+        Optional<User> optionalUser = userRepository.findByEmail(registrationRequestDTO.getEmail());
+        if (optionalUser.isPresent()) {
             throw new UserAlreadyExistsException("User already exists");
         }
 
         User newUser = UserMapper.mapToUser(registrationRequestDTO, new User());
         newUser.setPassword(passwordEncoder.encode(registrationRequestDTO.getPassword()));
 
-        UserRole defaultRole = userRoleRepository.findByName("ATTENDEE");
-        UserRole eventManager = userRoleRepository.findByName("EVENT_MANAGER");
-        newUser.setRoles(List.of(defaultRole,eventManager));
-        userRepository.save(newUser);
+        Optional <UserRole> defaultRole = userRoleRepository.findByName("ATTENDEE");
+        Optional <UserRole> eventManager = userRoleRepository.findByName("EVENT MANAGER");
 
+        if (defaultRole.isPresent() && eventManager.isPresent()){
+            newUser.setRoles(List.of(defaultRole.get(), eventManager.get()));
+        }
+        System.out.println("heyyyyyyyyyyyy "+newUser.getRoles()+newUser);
+        userRepository.save(newUser);
 
     }
 

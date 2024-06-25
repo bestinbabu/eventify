@@ -3,26 +3,22 @@ package com.eventify.eventify.initialization;
 import com.eventify.eventify.entity.user.UserPrivileges;
 import com.eventify.eventify.entity.user.UserRole;
 import com.eventify.eventify.repository.UserPrivilegesRepository;
-import com.eventify.eventify.repository.UserRepository;
 import com.eventify.eventify.repository.UserRoleRepository;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class DataInitializer {
 
-    @Autowired
-    private UserRoleRepository userRoleRepository;
 
-    @Autowired
-    private UserPrivilegesRepository userPrivilegesRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final UserPrivilegesRepository userPrivilegesRepository;
 
     @PostConstruct
     public void initializeData() {
-        if (userRoleRepository.findByName("Attendee") == null || userRoleRepository.findByName("Event Manager") == null) {
+        if (userRoleRepository.findByName("Attendee").isEmpty()  || userRoleRepository.findByName("Event Manager").isEmpty()) {
             // User roles and privileges don't exist, proceed with seeding
 
             // Attendee Role and Privileges

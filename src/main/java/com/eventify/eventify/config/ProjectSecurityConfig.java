@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,28 +17,22 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class ProjectSecurityConfig {
 
-    private  final UsernamePwdAuthProvider usernamePwdAuthProvider;
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-//                .authorizeRequests((requests) -> requests.anyRequest().permitAll())
+                .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(req -> req
-                        .requestMatchers("/home").permitAll()
-                        .requestMatchers("/api/v1/**").authenticated());
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//                .authorizeHttpRequests(req -> req
+//                        .requestMatchers("/home").permitAll()
+//                        .requestMatchers("/api/v1/**").authenticated());
         return http.build();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        return usernamePwdAuthProvider;
     }
 
     @Bean

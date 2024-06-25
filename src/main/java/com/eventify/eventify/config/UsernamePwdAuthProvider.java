@@ -22,15 +22,13 @@ import java.util.Optional;
 @Component
 public class UsernamePwdAuthProvider implements AuthenticationProvider {
 
-    private PasswordEncoder passwordEncoder;
-    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
         String password = authentication.getCredentials().toString();
-
-        System.out.println(email+password);
 
         Optional <User> user = userRepository.findByEmail(email);
 

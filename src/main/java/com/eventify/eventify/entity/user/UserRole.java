@@ -7,12 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -48,14 +45,6 @@ public class UserRole extends BaseEntity {
 
     public UserRole(String name) {
         this.name = name;
-    }
-
-    public Collection<GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (UserPrivileges privilege : privileges) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+privilege.getName()));
-        }
-        return authorities;
     }
 
 }
