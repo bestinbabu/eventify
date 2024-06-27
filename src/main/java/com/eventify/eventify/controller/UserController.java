@@ -29,7 +29,8 @@ public class UserController {
                 .body(new ResponseDto(AuthConstants.STATUS_201, AuthConstants.MESSAGE_201));
     }
 
-    @GetMapping("/")
+
+    @GetMapping("/api/v1/poda")
     public String hello() {
         return "hi";
     }

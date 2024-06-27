@@ -1,0 +1,117 @@
+
+Skip to content
+Using Gmail with screen readers
+Conversations
+5.32 GB of 15 GB used
+Terms · Privacy · Program Policies
+Last account activity: 1 hour ago
+Details
+
+User Registration
+----------------
+[] Id
+[] UserName
+[] email
+[] password
+[] phone Number
+
+User Login
+-----------
+[] Email
+[] Password
+
+Even Creation
+-------------
+[] Id
+[] Event Name
+[] Description
+[] Time
+[] Number of Seats
+[] Category
+[] Pricing per Seat
+
+[] OTP given For email verification
+[] JWT token given when a userCredentials login
+[] Filter of Events Based on Categories
+[] Searching for A specific Event
+[] Book seats for an Event
+[] Create an Event
+
+
+
+User Registration and Authentication:
+
+Implement userCredentials registration functionality with OTP-based email verification.
+Configure Spring Security for userCredentials authentication using email and password.
+Event Management:
+
+Define data models/entities for events and categories.
+Implement CRUD operations for events and categories.
+Implement filtering and searching functionalities for events.
+Event Registration and Ticket Issuance:
+
+Implement userCredentials registration for events, including validation of userCredentials input.
+Generate digital tickets for registered users.
+Implement email notification for successful event registration.
+Event Creation by Users:
+
+Allow authenticated users to create events.
+Implement validation to ensure completeness of event details.
+Handle event creation requests and store event data in the database.
+Admin Functionality:
+
+Implement basic admin functionalities such as viewing users and events.
+Configure role-based access control to differentiate between admin and regular users.
+
+
+https://www.reddit.com/r/SpringBoot/comments/19euqmz/seeking_code_review_for_digital_banking_project/
+https://github.com/Mohamed-Yuta/Digital-Banking/blob/main/src/main/java/com/example/demo/service/BankAccountServiceImpl.java
+https://www.youtube.com/watch?v=NaEk2zAmDE8
+https://www.youtube.com/watch?v=9SGDpanrc8U
+https://www.youtube.com/watch?v=DoK3-9V5HRE
+https://www.youtube.com/watch?v=gPnd-hzM_6A
+https://github.com/eazybytes/microservices/tree/3.2.3/section_17/accounts/src/main/java/com/eazybytes/accounts/mapper
+
+project.txt
+Displaying project.txt.
+
+
+
+User Credentials
+
+    Id
+    Email
+    Password
+
+User Details
+
+    Id
+    UserId (Foreign Key referencing User Credentials)
+    Username
+    Phone Number
+
+Event Details
+
+    Id
+    Event Name
+    Description
+    Time
+    Number of Seats
+    Pricing per Seat
+
+Event Category
+
+    Id
+    Name
+
+Event Booking
+
+    Id
+    EventId (Foreign Key referencing Event Details)
+    UserId (Foreign Key referencing User Credentials)
+    Number of Seats Booked
+
+
+
+
+

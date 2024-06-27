@@ -1,5 +1,6 @@
 package com.eventify.eventify.filter;
 
+import com.eventify.eventify.constants.SecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -10,11 +11,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 
 import static com.eventify.eventify.constants.SecurityConstants.JWT_KEY;
-import static com.nimbusds.jwt.JWTClaimNames.EXPIRATION_TIME;
 
 @Service
 public class JwtService {
@@ -34,6 +37,9 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+
+
+
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -43,20 +49,20 @@ public class JwtService {
     }
 
 
-    public String generateToken(String email) {
-        return generateToken(new HashMap<>(), email);
+
+
+    public String generateToken(Authentication authentication) {
+        String email = authentication.getName();
+        Object authorities = populateAuthorities(authentication.getAuthorities());
+        return buildToken(email, authorities);
     }
 
-    private String generateToken(HashMap<String, Object> claims, String email) {
-        return buildToken(claims, email,EXPIRATION_TIME);
-    }
-
-    private String buildToken(HashMap<String, Object> claims, String email, String expirationTime) {
+    private String buildToken(String email, Object authorities) {
         return Jwts.builder()
                 .subject(email)
                 .issuedAt(new java.util.Date())
-                .expiration(new java.util.Date(System.currentTimeMillis() + Long.parseLong(expirationTime)))
-                .claim("authorities", populateAuthorities(authentication.getAuthorities()))
+                .expiration(new java.util.Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+                .claim("authorities", authorities)
                 .signWith(getSigningKey())
                 .compact();
 }
@@ -72,6 +78,9 @@ public class JwtService {
         byte [] keyBytes = Decoders.BASE64.decode(JWT_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+
+
 
     public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new java.util.Date());

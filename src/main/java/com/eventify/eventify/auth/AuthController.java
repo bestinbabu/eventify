@@ -1,8 +1,7 @@
 package com.eventify.eventify.auth;
 
-import com.eventify.eventify.constants.AuthConstants;
-import com.eventify.eventify.dto.ResponseDto;
 import com.eventify.eventify.dto.auth.AuthenticationRequest;
+import com.eventify.eventify.filter.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<ResponseDto> authenticate( @RequestBody AuthenticationRequest request) {
+    public ResponseEntity<String> authenticate( @RequestBody AuthenticationRequest request) {
         System.out.println(request.getEmail() + " " + request.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
+        var jwtToken = jwtService.generateToken(authentication);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ResponseDto(AuthConstants.STATUS_200, AuthConstants.MESSAGE_200));
+                .body(jwtToken);
 
     }
 

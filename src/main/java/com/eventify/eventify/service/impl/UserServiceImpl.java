@@ -39,7 +39,6 @@ public class UserServiceImpl implements IUserService {
         if (defaultRole.isPresent() && eventManager.isPresent()){
             newUser.setRoles(List.of(defaultRole.get(), eventManager.get()));
         }
-        System.out.println("heyyyyyyyyyyyy "+newUser.getRoles()+newUser);
         userRepository.save(newUser);
 
     }

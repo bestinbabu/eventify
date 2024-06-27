@@ -47,4 +47,5 @@ public class UserRole extends BaseEntity {
         this.name = name;
     }
 
+
 }

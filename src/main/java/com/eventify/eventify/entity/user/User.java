@@ -3,7 +3,10 @@ package com.eventify.eventify.entity.user;
 import com.eventify.eventify.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,5 +40,18 @@ public class User extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_profile_id", unique = true)
     private UserProfile userProfile;
+
+
+    public List<GrantedAuthority> getGrantedAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        for (UserRole role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+            authorities.addAll(role.getPrivileges().stream()
+                    .map(privilege -> new SimpleGrantedAuthority("PRIVILEGE_" + privilege.getName()))
+                    .toList());
+        }
+        return authorities;
+    }
 }
 
