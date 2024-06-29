@@ -2,7 +2,7 @@ package com.eventify.eventify.controller;
 
 import com.eventify.eventify.constants.AuthConstants;
 import com.eventify.eventify.dto.ResponseDto;
-import com.eventify.eventify.dto.user.RegistrationRequest;
+import com.eventify.eventify.dto.user.RegistrationRequestDto;
 import com.eventify.eventify.service.IUserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class UserController {
     IUserService iUserService;
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDto> registerUser(@Valid @RequestBody RegistrationRequest registrationRequestDTO) {
+    public ResponseEntity<ResponseDto> registerUser(@Valid @RequestBody RegistrationRequestDto registrationRequestDTO) {
 
         iUserService.registerUser(registrationRequestDTO);
         return ResponseEntity
@@ -30,7 +30,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/api/v1/poda")
+    @GetMapping("/poda")
     public String hello() {
         return "hi";
     }

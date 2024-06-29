@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class UserProfileDto {
 
     @NotEmpty(message = "Username cannot be empty")
     private String username;

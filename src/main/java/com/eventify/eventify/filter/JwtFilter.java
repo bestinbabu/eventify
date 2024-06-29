@@ -1,7 +1,7 @@
 package com.eventify.eventify.filter;
 
 import com.eventify.eventify.entity.user.User;
-import com.eventify.eventify.repository.UserRepository;
+import com.eventify.eventify.repository.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

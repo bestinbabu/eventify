@@ -3,45 +3,40 @@ package com.eventify.eventify.entity.user;
 import com.eventify.eventify.entity.BaseEntity;
 import com.eventify.eventify.entity.event.Event;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user_role")
+@Table(name = "user_roles")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserRole extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+    private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "eventManagers")
-    private Set<Event> events;
+    private Set<Event> events = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role_privileges",
+            name = "role_privileges",
             joinColumns = @JoinColumn(
-                    name = "user_role_id", referencedColumnName = "id"),
+                    name = "role_id"),
             inverseJoinColumns = @JoinColumn(
-                    name = "user_privilege_id", referencedColumnName = "id"))
-    private Collection<UserPrivileges> privileges = new ArrayList<>();
+                    name = "privilege_id"))
+    private Set<UserPrivilege> privileges = new HashSet<>();
 
     public UserRole(String name) {
         this.name = name;

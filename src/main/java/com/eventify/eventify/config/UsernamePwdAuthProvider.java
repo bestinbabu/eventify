@@ -2,7 +2,7 @@ package com.eventify.eventify.config;
 
 import com.eventify.eventify.entity.user.User;
 import com.eventify.eventify.exception.BadCredentialsException;
-import com.eventify.eventify.repository.UserRepository;
+import com.eventify.eventify.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

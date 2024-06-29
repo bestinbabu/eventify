@@ -1,10 +1,10 @@
 package com.eventify.eventify.service;
 
-import com.eventify.eventify.dto.user.RegistrationRequest;
+import com.eventify.eventify.dto.user.RegistrationRequestDto;
 
 public interface IUserService {
 
-    void registerUser(RegistrationRequest registrationRequestDTO);
+    void registerUser(RegistrationRequestDto registrationRequestDTO);
 
 
 

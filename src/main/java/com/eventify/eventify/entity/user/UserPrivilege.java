@@ -4,28 +4,29 @@ import com.eventify.eventify.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_privileges")
 @Getter
 @Setter
-@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserPrivileges extends BaseEntity {
+public class UserPrivilege extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "privileges")
-    private Collection<UserRole> roles;
+    private Set<UserRole> roles = new HashSet<>();
 
-    public UserPrivileges(String name) {
+    public UserPrivilege(String name) {
         this.name = name;
     }
 }

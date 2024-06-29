@@ -1,9 +1,9 @@
 package com.eventify.eventify.initialization;
 
-import com.eventify.eventify.entity.user.UserPrivileges;
+import com.eventify.eventify.entity.user.UserPrivilege;
 import com.eventify.eventify.entity.user.UserRole;
-import com.eventify.eventify.repository.UserPrivilegesRepository;
-import com.eventify.eventify.repository.UserRoleRepository;
+import com.eventify.eventify.repository.user.UserPrivilegesRepository;
+import com.eventify.eventify.repository.user.UserRoleRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,8 +22,8 @@ public class DataInitializer {
             // User roles and privileges don't exist, proceed with seeding
 
             // Attendee Role and Privileges
-            UserPrivileges viewEventDetails = new UserPrivileges("View_Event_Details");
-            UserPrivileges registerForEvent = new UserPrivileges("Register_For_Event");
+            UserPrivilege viewEventDetails = new UserPrivilege("View_Event_Details");
+            UserPrivilege registerForEvent = new UserPrivilege("Register_For_Event");
 
             UserRole attendeeRole = new UserRole("Attendee");
             attendeeRole.getPrivileges().add(viewEventDetails);
@@ -37,9 +37,9 @@ public class DataInitializer {
             userRoleRepository.save(attendeeRole);
 
             // Event Manager Role and Privileges
-            UserPrivileges createEvent = new UserPrivileges("Create_Event");
-            UserPrivileges editEvent = new UserPrivileges("Edit_Event");
-            UserPrivileges manageAttendees = new UserPrivileges("Manage_Event_Attendees");
+            UserPrivilege createEvent = new UserPrivilege("Create_Event");
+            UserPrivilege editEvent = new UserPrivilege("Edit_Event");
+            UserPrivilege manageAttendees = new UserPrivilege("Manage_Event_Attendees");
 
             UserRole eventManagerRole = new UserRole("Event Manager");
             eventManagerRole.getPrivileges().add(createEvent);

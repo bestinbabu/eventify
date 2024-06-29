@@ -1,7 +1,7 @@
 package com.eventify.eventify.dto.event;
 
 
-import com.eventify.eventify.dto.user.UserDTO;
+import com.eventify.eventify.dto.user.UserProfileDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -10,10 +10,10 @@ public class EventBookingDTO {
 
 
     @NotNull(message = "User details cannot be null")
-    private UserDTO user;
+    private UserProfileDto user;
 
     @NotNull(message = "Event details cannot be null")
-    private EventDetailsDTO event;
+    private NewEventDto event;
 
     @NotNull(message = "Number of tickets cannot be null")
     private Integer numberOfTickets;

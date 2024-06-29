@@ -7,7 +7,7 @@ import lombok.Data;
 
 
 @Data
-public class RegistrationRequest {
+public class RegistrationRequestDto {
 
     @NotEmpty(message = "Email address cannot be empty")
     @Email(message = "Invalid email format")

@@ -7,15 +7,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User extends BaseEntity {
 
     @Id
@@ -31,27 +34,39 @@ public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_user_role",
+            name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_role_id")
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<UserRole> roles;
+    private Set<UserRole> roles = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_profile_id", unique = true)
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private UserProfile userProfile;
+
+    @Column(nullable = false)
+    private boolean enabled = true;
+
+    @Column(nullable = false)
+    private boolean accountNonExpired = true;
+
+    @Column(nullable = false)
+    private boolean accountNonLocked = true;
+
+    @Column(nullable = false)
+    private boolean credentialsNonExpired = true;
 
 
     public List<GrantedAuthority> getGrantedAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-
-        for (UserRole role : roles) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-            authorities.addAll(role.getPrivileges().stream()
-                    .map(privilege -> new SimpleGrantedAuthority("PRIVILEGE_" + privilege.getName()))
-                    .toList());
-        }
-        return authorities;
+        return roles.stream()
+                .flatMap(role -> {
+                    List<GrantedAuthority> authorities = new ArrayList<>();
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+                    authorities.addAll(role.getPrivileges().stream()
+                            .map(privilege -> new SimpleGrantedAuthority("PRIVILEGE_" + privilege.getName()))
+                            .collect(Collectors.toList()));
+                    return authorities.stream();
+                })
+                .collect(Collectors.toList());
     }
 }
 

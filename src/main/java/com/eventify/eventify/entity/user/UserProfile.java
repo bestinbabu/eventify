@@ -5,12 +5,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "user_profile")
+@Table(name = "user_profiles")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserProfile extends BaseEntity {
 
     @Id

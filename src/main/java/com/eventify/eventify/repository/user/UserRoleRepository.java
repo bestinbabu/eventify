@@ -1,4 +1,4 @@
-package com.eventify.eventify.repository;
+package com.eventify.eventify.repository.user;
 
 import com.eventify.eventify.entity.user.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -51,11 +50,11 @@ public class Event extends BaseEntity {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_role_id")
     )
-    private Set<UserRole> eventManagers;
+    private List<UserRole> eventManagers;
 
 
     @ManyToMany
-    private Set<UserProfile> attendees;  // Many-to-many with User for registered attendees
+    private List<UserProfile> attendees;  // Many-to-many with User for registered attendees
 
 
     @ManyToMany // Many events can have many categories

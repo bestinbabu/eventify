@@ -32,7 +32,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/api/v1/users/register").permitAll()
                         .requestMatchers("/api/auth/authenticate").permitAll()
-                        .requestMatchers("/api/v1/poda").authenticated());
+                        .requestMatchers("/api/v1/users/poda").authenticated());
 
         return http.build();
     }
