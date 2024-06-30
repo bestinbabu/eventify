@@ -68,36 +68,3 @@ public class UserController {
 
 
 
-//    @Autowired
-//    CustomerRepository customerRepository;
-//
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-//
-//    @PostMapping("/register")
-//    public ResponseEntity<String> registerUser(@RequestBody Customer customer){
-//        Customer savedCustomer = null;
-//        ResponseEntity response = null;
-//
-//        try {
-//            String hashedPassword = passwordEncoder.encode(customer.getPwd());
-//            customer.setPwd(hashedPassword);
-//            customer.setCreateDt(String.valueOf(new Date(System.currentTimeMillis())));
-//            savedCustomer = customerRepository.save(customer);
-//            if (savedCustomer.getId() > 0) {
-//                response = ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
-//
-//            }
-//        }
-//        catch ( Exception e) {
-//            response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed");
-//        }
-//
-//        return response;
-//    }
-//
-//    @RequestMapping("/user")
-//    public Customer getUserDetails(Authentication authentication)
-//    {
-//        return customerRepository.findByEmail(authentication.getName()).get(0);
-//    }

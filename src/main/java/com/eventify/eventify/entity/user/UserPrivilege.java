@@ -1,8 +1,12 @@
+
 package com.eventify.eventify.entity.user;
 
 import com.eventify.eventify.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +15,6 @@ import java.util.Set;
 @Table(name = "user_privileges")
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserPrivilege extends BaseEntity {
@@ -20,7 +23,7 @@ public class UserPrivilege extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "privileges")

@@ -1,25 +1,30 @@
+
 package com.eventify.eventify.entity.event;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor // Lombok annotations
+@Table(name = "event_categories")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private Long categoryId;
+    private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "categories") // Mapped by refers to the field in EventDetailsEntity
-    private List<Event> events;
-
-
+    @ManyToMany(mappedBy = "categories")
+    private Set<Event> events = new HashSet<>();
 }
-

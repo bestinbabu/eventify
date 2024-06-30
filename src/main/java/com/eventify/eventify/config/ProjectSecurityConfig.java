@@ -1,5 +1,6 @@
 package com.eventify.eventify.config;
 
+
 import com.eventify.eventify.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

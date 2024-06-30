@@ -4,62 +4,70 @@ import com.eventify.eventify.entity.BaseEntity;
 import com.eventify.eventify.entity.user.UserProfile;
 import com.eventify.eventify.entity.user.UserRole;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "events")
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
-@NoArgsConstructor // Lombok annotations
+@NoArgsConstructor
 public class Event extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_id")
-    private Long eventId;
+    private Long id;
 
-    @Column(name = "event_name", nullable = false)
-    private String eventName;
+    @Column(nullable = false)
+    private String name;
 
-    @Column(name = "description", nullable = false)
+    @Column(nullable = false)
     private String description;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime startDate;
 
-    @Column(name = "end_date", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime endDate;
 
-    @Column(name = "number_of_seats")
     private Integer numberOfSeats;
 
-    @Column(name = "pricing_per_seat", nullable = false)
+    @Column(nullable = false)
     private Double pricingPerSeat;
 
     @ManyToOne
-    @JoinColumn(name = "organizer_id")  // Updated to reference user_profile table
+    @JoinColumn(name = "organizer_id")
     private UserProfile organizer;
 
     @ManyToMany
     @JoinTable(
-            name = "event_managers", // Choose an appropriate name for the join table
-            joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_role_id")
+            name = "event_managers",
+            joinColumns = @JoinColumn(name = "events_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_roles_id")
     )
-    private List<UserRole> eventManagers;
+    private Set<UserRole> eventManagers;
+
+    @ManyToMany
+    @JoinTable(
+            name = "event_attendees",
+            joinColumns = @JoinColumn(name = "events_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_profiles_id")
+    )
+    private Set<UserProfile> attendees;
 
 
     @ManyToMany
-    private List<UserProfile> attendees;  // Many-to-many with User for registered attendees
-
-
-    @ManyToMany // Many events can have many categories
-    @JoinTable(name = "event_event_category", // Join table name
-            joinColumns = @JoinColumn(name = "event_id"), // Foreign key for EventDetailsEntity
-            inverseJoinColumns = @JoinColumn(name = "event_category_id")) // Foreign key for EventCategoryEntity
-    private List<EventCategory> categories;
+    @JoinTable(
+            name = "event_categories_mappings",
+            joinColumns = @JoinColumn(name = "events_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_categorys_id")
+    )
+    private Set<EventCategory> categories = new HashSet<>();
 }

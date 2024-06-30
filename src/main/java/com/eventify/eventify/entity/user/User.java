@@ -2,7 +2,10 @@ package com.eventify.eventify.entity.user;
 
 import com.eventify.eventify.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -18,29 +21,27 @@ import java.util.stream.Collectors;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class User extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "user_roles_mappings",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_roles_id")
     )
     private Set<UserRole> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserProfile userProfile;
 
     @Column(nullable = false)
@@ -63,10 +64,11 @@ public class User extends BaseEntity {
                     authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
                     authorities.addAll(role.getPrivileges().stream()
                             .map(privilege -> new SimpleGrantedAuthority("PRIVILEGE_" + privilege.getName()))
-                            .collect(Collectors.toList()));
+                            .toList());
                     return authorities.stream();
                 })
                 .collect(Collectors.toList());
     }
-}
 
+
+}
