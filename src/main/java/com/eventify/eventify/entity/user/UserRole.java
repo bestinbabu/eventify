@@ -28,9 +28,6 @@ public class UserRole extends BaseEntity {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany(mappedBy = "eventManagers")
-    private Set<Event> events = new HashSet<>();
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_privileges",

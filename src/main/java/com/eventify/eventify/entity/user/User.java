@@ -41,7 +41,9 @@ public class User extends BaseEntity {
     )
     private Set<UserRole> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)  // Owning side
+    @JoinColumn(name = "user_profile_id", unique = true) // MappedBy points to the owning side (UserProfile)
     private UserProfile userProfile;
 
     @Column(nullable = false)

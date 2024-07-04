@@ -32,7 +32,21 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/api/v1/users/register").permitAll()
                         .requestMatchers("/api/auth/authenticate").permitAll()
-                        .requestMatchers("/api/v1/users/poda").authenticated());
+                        .requestMatchers("/api/v1/users/poda").authenticated()
+
+
+                        .requestMatchers("/api/v1/users/create-profile").authenticated()
+                        .requestMatchers("/api/v1/users/profile").authenticated()
+                        .requestMatchers("/api/v1/users/profile/update").authenticated()
+                        .requestMatchers("/api/v1/users/profile/delete").authenticated()
+
+                        .requestMatchers("/api/v1/create-event").authenticated()
+                        .requestMatchers("/api/v1/update-event/{eventId}").authenticated()
+                        .requestMatchers("/api/v1/delete-event/{eventId}").authenticated()
+
+                        .requestMatchers("/api/v1/events").authenticated()
+                        .requestMatchers("/api/v1/events/{eventId}").authenticated()
+                        .anyRequest().authenticated());
 
         return http.build();
     }

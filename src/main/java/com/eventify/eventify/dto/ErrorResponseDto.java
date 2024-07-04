@@ -1,15 +1,15 @@
 package com.eventify.eventify.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
 @Data
 @Getter
-@NoArgsConstructor
+@Builder
 public class ErrorResponseDto {
 
     private String apiPath;

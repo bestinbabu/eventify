@@ -37,6 +37,9 @@ public class Event extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime endDate;
 
+    @Column(nullable = false)
+    private LocalDateTime registrationDeadline;
+
     private Integer numberOfSeats;
 
     @Column(nullable = false)
@@ -46,19 +49,19 @@ public class Event extends BaseEntity {
     @JoinColumn(name = "organizer_id")
     private UserProfile organizer;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "event_managers",
-            joinColumns = @JoinColumn(name = "events_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_roles_id")
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_profile_id")
     )
-    private Set<UserRole> eventManagers;
+    private Set<UserProfile> eventManagers = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
             name = "event_attendees",
-            joinColumns = @JoinColumn(name = "events_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_profiles_id")
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_profile_id")
     )
     private Set<UserProfile> attendees;
 
@@ -66,8 +69,8 @@ public class Event extends BaseEntity {
     @ManyToMany
     @JoinTable(
             name = "event_categories_mappings",
-            joinColumns = @JoinColumn(name = "events_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_categorys_id")
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_category_id")
     )
     private Set<EventCategory> categories = new HashSet<>();
 }
